@@ -9,7 +9,8 @@ func evalRPN(tokens []string) int {
 	for _, t := range tokens {
 		if strings.Index("+-*/", t) >= 0 {
 			index--
-			stack[index] = compute(stack[index], stack[index+1], t)
+			a, b := stack[index], stack[index+1]
+			stack[index] = compute(toInt(a), toInt(b), t)
 			continue
 		}
 		index++
@@ -20,16 +21,13 @@ func evalRPN(tokens []string) int {
 
 var toStr = strconv.Itoa
 
-func compute(x, y, t string) string {
-	var res string
+func compute(x, y int, t string) string {
 	if t == "+" {
-		res = toStr(toInt(x) + toInt(y))
+		return toStr(x + y)
 	} else if t == "-" {
-		res = toStr(toInt(x) - toInt(y))
+		return toStr(x - y)
 	} else if t == "*" {
-		res = toStr(toInt(x) * toInt(y))
-	} else if t == "/" {
-		res = toStr(toInt(x) / toInt(y))
+		return toStr(x * y)
 	}
-	return res
+	return toStr(x / y)
 }
