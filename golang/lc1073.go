@@ -18,9 +18,11 @@ func addNegabinary(arr1 []int, arr2 []int) []int {
         s := -carry //如果有上一次迭代有进位，应该抵消
         if i > -1 {
             s += arr1[i]
+            i--
         }
         if j > -1 {
             s += arr2[j]
+            j--
         }
         carry = s >> 1
         if s == -1 {
@@ -29,7 +31,6 @@ func addNegabinary(arr1 []int, arr2 []int) []int {
         }
         res[k] = s & 1
         k--
-        i, j = i-1, j-1
     }
     index := -1
     for i := 0; i < len(res); i++ {
