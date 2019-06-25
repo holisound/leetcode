@@ -11,8 +11,9 @@ func addNegabinary(arr1 []int, arr2 []int) []int {
                  0, -8 + 8
                1
     */
-    i, j, carry := len(arr1)-1, len(arr2)-1, 0
-    res := []int{}
+    l1, l2 := len(arr1), len(arr2)
+    i, j, k, carry := l1-1, l2-1, l1+l2, 0
+    res := make([]int, l1+l2+1)
     for i > -1 || j > -1 || carry != 0 {
         s := -carry //如果有上一次迭代有进位，应该抵消
         if i > -1 {
@@ -26,10 +27,10 @@ func addNegabinary(arr1 []int, arr2 []int) []int {
             // 进位未抵消
             carry = -1
         }
-        res = append(res, s&1)
+        res[k] = s & 1
+        k--
         i, j = i-1, j-1
     }
-    reverse(res, 0, len(res)-1)
     index := -1
     for i := 0; i < len(res); i++ {
         if res[i] == 1 {
@@ -41,12 +42,4 @@ func addNegabinary(arr1 []int, arr2 []int) []int {
         return []int{0}
     }
     return res[index:]
-}
-
-func reverse(arr []int, i, j int) {
-    for i < j {
-        arr[i], arr[j] = arr[j], arr[i]
-        j--
-        i++
-    }
 }
