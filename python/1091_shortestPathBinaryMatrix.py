@@ -12,10 +12,10 @@ class Solution(object):
             return -1
         while que:
             r, c, p = que.popleft()
+            if r == N-1 and c == N-1:
+                return p
             for dr in [-1, 0, 1]:
                 for dc in [-1, 0, 1]:
-                    if r == N-1 and c == N-1:
-                        return p
                     if dr == 0 and dc == 0:
                         continue
                     if r+dr > -1 and r+dr < N and c+dc > -1 and c+dc < N:
