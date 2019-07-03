@@ -36,8 +36,7 @@ func Comb(n, k int) int {
     }
     res := 1
     for i := 0; i < k; i++ {
-        res = res * n / (i + 1)
-        n--
+        res = res * (n - i) / (i + 1)
     }
 
     return res
