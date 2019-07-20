@@ -4,6 +4,7 @@ class Solution(object):
         :type chars: List[str]
         :rtype: int
         """
+        # 流下了菜鸡的眼泪
         j, k = 0, 0
         N = len(chars)
         for i in range(1, N + 1):
@@ -13,7 +14,5 @@ class Solution(object):
                     for x in str(i - j):
                         k += 1
                         chars[k] = x
-                k += 1
-
-                j = i
+                j, k = i, k + 1
         return k
