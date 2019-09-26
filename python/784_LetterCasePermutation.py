@@ -4,8 +4,7 @@ class Solution:
         def backtrack(S, start, res):
             n = len(S)
             for i in range(start,n):
-                c=S[i]
-                if c.isalpha():
+                if S[i].isalpha():
                     nc=chr(ord(S[i])^32)
                     ns=S[:i]+nc+S[i+1:]
                     # 注意:下次起始位置应该是i+1, 不是start+1
