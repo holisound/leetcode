@@ -7,7 +7,7 @@ class Solution:
                 if count == num:
                     h = last >> 6
                     m = last - (h << 6)
-                    if 0 <= h < 12and 0 <= m < 60:
+                    if 0 <= h < 12 and 0 <= m < 60:
                         res.append("%d:%02d" % (h, m))
             else:
                 last <<= 1
