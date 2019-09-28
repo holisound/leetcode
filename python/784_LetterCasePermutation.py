@@ -29,3 +29,15 @@ class Solution:
             return res
             
         return backtrack2(0,[S], len(S))
+        
+        def backtrack3(chars, p, res):
+            n = len(chars)
+            for i in range(p, n):
+                if chars[i].isalpha():
+                    temp = chars[i]
+                    chars[i] = chr(ord(chars[i]) ^ 32)
+                    res.append(''.join(chars))
+                    backtrack3(chars, i+1, res)
+                    chars[i] = temp
+            return res
+        return backtrack3(list(S), 0, [S])
