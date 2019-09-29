@@ -41,3 +41,12 @@ class Solution:
                     chars[i] = temp
             return res
         return backtrack3(list(S), 0, [S])
+        # 迭代版本
+        res=[S]
+        n = len(S)
+        for i in range(n):
+            for j in range(len(res)):
+                x=res[j]
+                if x[i].isalpha():
+                    res.append(x[:i]+chr(ord(x[i])^32)+x[i+1:])
+        return res
