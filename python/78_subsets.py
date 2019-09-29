@@ -9,3 +9,11 @@ class Solution:
             return res
         
         return backtrack(nums, 0, [], [[]])
+    
+        # 迭代
+        res=[[]]
+        n = len(nums)
+        for i in range(n):
+            for j in range(len(res)):
+                res.append(res[j]+[nums[i]])
+        return res
