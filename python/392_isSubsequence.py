@@ -39,3 +39,18 @@ class Solution(object):
             if index == len(s):
                 return True
         return False
+
+    def dp(self, s, t):
+        m, n = len(s), len(t)
+        F = [0] * (m+1)
+        F[0]=1
+        start=0
+        for i in range(1,m+1):
+            for j in range(start, n):
+                if s[i-1]==t[j]:
+                    F[i]= F[i-1]
+                    start=j+1
+                    break
+            if F[i-1] == 0:
+                break
+        return F[m]
