@@ -28,10 +28,6 @@ Note:
 1 <= rooms.length <= 1000
 0 <= rooms[i].length <= 1000
 The number of keys in all rooms combined is at most 3000.
-
-来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/keys-and-rooms
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 '''
 class Solution:
     def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
