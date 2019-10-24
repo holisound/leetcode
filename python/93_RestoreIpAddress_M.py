@@ -1,6 +1,8 @@
 class Solution:
     def restoreIpAddresses(self, s: str) -> List[str]:
         def backtrack(i, dot, last, res):
+            if i > 12:
+                return
             if i == len(s):
                 if dot == 3 and ok(last):
                     res.append(last)
@@ -10,8 +12,6 @@ class Solution:
             backtrack(i + 1, dot, last + s[i], res)
 
             return res
-        if len(s) > 12:
-            return []
         return backtrack(0, 0, '', [])
 
 
