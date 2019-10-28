@@ -13,9 +13,7 @@ class Solution:
             temp = m[index]
             s, t = sources[i], targets[i]
             if temp.startswith(s):
-                chars = list(temp)
-                chars[:len(s)] = list(t)
-                m[index] = ''.join(chars)
+                m[index] = t + temp[len(s):]
         res = ''
         for k in sorted(m):
             res += m[k]
