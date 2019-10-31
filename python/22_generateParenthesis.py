@@ -23,3 +23,18 @@ class Solution:
             que.append((s+")",l,r+1))
             
         return res
+
+def count_dyck_word(n, x, y):
+    count_dyck_word.count = 0
+    count_dyck_word.enum = []
+
+    def backtrack(l, r, p):
+        if r > l or l > n:
+            return
+        if l == r == n:
+            count_dyck_word.enum.append(p)
+            count_dyck_word.count += 1
+        backtrack(l + 1, r, p + x)
+        backtrack(l, r + 1, p + y)
+    backtrack(0, 0, '')
+    return count_dyck_word
