@@ -9,7 +9,7 @@ class Solution:
             count[i] = 0
         return [count[i] for i in range(len(nums))]
 
-        # O(NLogN) AC, inspired by LIS problem
+        # Also O(N^2) but AC, inspired by LIS problem
         lis = []
         res = []
 
