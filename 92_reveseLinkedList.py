@@ -20,8 +20,10 @@ class Solution:
 
         for _ in range(n - m + 1):
             pre, cur = cur, cur.next
-        # find the first node of right part, and break the chain again
-        right, pre.next = pre.next, None
+        # find the first node of right part
+        right = cur
+        # break the chain again
+        pre.next = None
 
         middle = reverse(rHead)
         left.next, rHead.next = middle, right  # rHead now is at the end
