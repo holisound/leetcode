@@ -11,11 +11,12 @@ class Solution2021:
                 if i >= 1 and chars[i-1] == k:
                     return ''
                 chars[i] = k
-                i += 2
-                if i >= N and N % 2 == 0:
-                    i += 1
+                i += 2                      # 先填充偶数索引(0, 2, ...)
+                if i >= N and N % 2 == 0:   # 偶数位填充完，使下一轮会继续填充奇数索引(1, 3, ...)
+                    i += 1                  # N 为 偶数时需要 i + 1, 保证从奇数索引填充
                 count[k] -= 1
         return ''.join(chars)
+
 
 class Solution(object):
 
