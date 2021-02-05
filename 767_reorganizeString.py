@@ -1,3 +1,22 @@
+class Solution2021:
+    def reorganizeString(self, S: str) -> str:
+        count = collections.Counter(S)
+        N = len(S)
+        keys = sorted(count.keys(), key=lambda x: -count[x])
+        chars = [''] * N
+        i = 0
+        for k in keys:
+            while count[k] > 0:
+                i %= N
+                if i >= 1 and chars[i-1] == k:
+                    return ''
+                chars[i] = k
+                i += 2
+                if i >= N and N % 2 == 0:
+                    i += 1
+                count[k] -= 1
+        return ''.join(chars)
+
 class Solution(object):
 
     def handle_loop(self, arr, s):
