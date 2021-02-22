@@ -14,3 +14,21 @@ class Solution:
                 right -= 1
             total += left - right
         return ans
+# 第二种解法似曾相识（强人太多了😂）
+class Solution:
+    def minOperations(self, boxes: str) -> List[int]:
+        res = []
+        n = len(boxes)
+        now = total = 0
+        for i in range(n):
+            total += now
+            res.append(total)
+            if boxes[i] == '1':
+                now += 1
+        now = total = 0
+        for i in range(n-1,-1,-1):
+            total += now
+            res[i] += total
+            if boxes[i] == '1':
+                now += 1
+        return res
