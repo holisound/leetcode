@@ -1,11 +1,11 @@
 class Solution:
     def countSmaller(self, nums: List[int]) -> List[int]:
         # O(N^2) TLE
-        count = collections.Counter()
-        for i, n in enumerate(nums):
+        count=collections.Counter()
+        for i,n in enumerate(nums):
             for index in count:
                 if n < nums[index]:
-                    count[index] += 1
+                    count[index]+=1
             count[i] = 0
         return [count[i] for i in range(len(nums))]
 
