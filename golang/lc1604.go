@@ -14,7 +14,6 @@ func alertNames(keyName []string, keyTime []string) []string {
     }
     res := []string{}
     for name, times := range key2Times {
-        flag := false
         for _, x := range times {
             cnt := 0
             for _, y := range times {
@@ -23,17 +22,12 @@ func alertNames(keyName []string, keyTime []string) []string {
                 }
                 cnt++
                 if cnt == 3 {
-                    flag = true
-                    break
+                    goto flag
                 }
             }
-            if flag{
-                break
-            }
         }
-        if flag {
-            res = append(res, name)
-        }
+        continue
+        flag:res = append(res, name)
     }
     sort.Strings(res)
     return res
