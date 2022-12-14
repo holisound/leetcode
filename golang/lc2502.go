@@ -32,7 +32,6 @@ func (this *Allocator) Allocate(size int, mID int) int {
 	for i := start; i < start+size; i++ {
 		if this.blocks[i] == 0 {
 			this.blocks[i] = mID
-			cnt++
 		}
 	}
 	return start
