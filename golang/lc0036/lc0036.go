@@ -20,11 +20,11 @@ func isValidSudoku(board [][]byte) bool {
 				break
 			}
 		}
-		if !(flag && search(board)) {
+		if !flag {
 			return false
 		}
 	}
-	return true
+	return search(board)
 }
 
 var dirs [][]int = [][]int{{0, 0}, {0, 1}, {0, 2}, {1, 2}, {2, 2}, {2, 1}, {2, 0}, {1, 0}, {1, 1}}
