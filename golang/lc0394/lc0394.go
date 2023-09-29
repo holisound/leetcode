@@ -1,50 +1,36 @@
-import lls "github.com/emirpasic/gods/stacks/linkedliststack"
+package main
+
+import (
+	"unicode"
+)
 
 func decodeString(s string) string {
-	stack := lls.New()
-	var chars []rune
+	var stack, dig, alp []rune
+
 	for _, c := range s {
 		if c == ']' {
-			for val, ok := stack.Peek(); ok && unicode.IsLetter(val.(rune)); val, ok = stack.Peek() {
-				chars = append(chars, val.(rune))
-				stack.Pop()
+			for len(stack) != 0 && unicode.IsLetter(stack[len(stack)-1]) {
+				alp = append(alp, stack[len(stack)-1])
+				stack = stack[:len(stack)-1]
 			}
-			reverse(chars)
-
-			seed := chars
-			chars = []rune{}
-			stack.Pop()
-
-			for val, ok := stack.Peek(); ok && unicode.IsDigit(val.(rune)); val, ok = stack.Peek() {
-				chars = append(chars, val.(rune))
-				stack.Pop()
+			stack = stack[:len(stack)-1]
+			for len(stack) != 0 && unicode.IsDigit(stack[len(stack)-1]) {
+				dig = append(dig, stack[len(stack)-1])
+				stack = stack[:len(stack)-1]
 			}
-			reverse(chars)
-			num, _ := strconv.Atoi(string(chars))
-
+			num := 0
+			for i := len(dig) - 1; i > -1; i-- {
+				num = num*10 + int(dig[i]-'0')
+			}
 			for i := 0; i < num; i++ {
-				for _, c := range seed {
-					stack.Push(c)
+				for j := len(alp) - 1; j > -1; j-- {
+					stack = append(stack, alp[j])
 				}
 			}
-			chars = []rune{}
+			dig, alp = []rune{}, []rune{}
 			continue
 		}
-
-		stack.Push(c)
-
+		stack = append(stack, c)
 	}
-	chars = []rune{}
-	for val, ok := stack.Peek(); ok; val, ok = stack.Peek() {
-		chars = append(chars, val.(rune))
-		stack.Pop()
-	}
-	return string(reverse(chars))
-}
-
-func reverse(chars []rune) []rune {
-	for i, j := 0, len(chars)-1; i < j; i, j = i+1, j-1 {
-		chars[i], chars[j] = chars[j], chars[i]
-	}
-	return chars
+	return string(stack)
 }
