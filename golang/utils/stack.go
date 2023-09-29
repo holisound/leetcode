@@ -9,6 +9,9 @@ type Stack struct {
 	sizeMax int
 }
 
+func CreateStack() *Stack {
+	return &Stack{[]int{}, map[int]int{}, 0, 0}
+}
 func (s *Stack) Push(x int) {
 	s.sizeCur++
 	if s.inStack == nil {

@@ -2,35 +2,40 @@ package main
 
 import (
 	"unicode"
+
+	"github.com/holisound/leetcode/utils"
 )
 
 func decodeString(s string) string {
-	var stack, dig, alp []rune
-
+	var alp []int
+	stack := utils.CreateStack()
 	for _, c := range s {
 		if c == ']' {
-			for len(stack) != 0 && unicode.IsLetter(stack[len(stack)-1]) {
-				alp = append(alp, stack[len(stack)-1])
-				stack = stack[:len(stack)-1]
+			for stack.Size() != 0 && unicode.IsLetter(rune(stack.Peek())) {
+				alp = append(alp, stack.Pop())
 			}
-			stack = stack[:len(stack)-1]
-			for len(stack) != 0 && unicode.IsDigit(stack[len(stack)-1]) {
-				dig = append(dig, stack[len(stack)-1])
-				stack = stack[:len(stack)-1]
-			}
+			stack.Pop()
 			num := 0
-			for i := len(dig) - 1; i > -1; i-- {
-				num = num*10 + int(dig[i]-'0')
+			base := 1
+			for stack.Size() != 0 && unicode.IsDigit(rune(stack.Peek())) {
+				d := int(rune(stack.Pop()) - '0')
+				num += d * base
+				base *= 10
 			}
 			for i := 0; i < num; i++ {
 				for j := len(alp) - 1; j > -1; j-- {
-					stack = append(stack, alp[j])
+					stack.Push(alp[j])
 				}
 			}
-			dig, alp = []rune{}, []rune{}
+			alp = []int{}
 			continue
 		}
-		stack = append(stack, c)
+		stack.Push(int(c))
 	}
-	return string(stack)
+
+	res := ""
+	for stack.Size() != 0 {
+		res = string(rune(stack.Pop())) + res
+	}
+	return res
 }
