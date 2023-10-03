@@ -1,8 +1,33 @@
+package main
+
+import (
+	"container/list"
+
+	. "github.com/holisound/leetcode/utils"
+)
+
+type BFSUtilExt struct {
+	BFSUtil
+}
+
+func (bfu *BFSUtilExt) Validate(pos *Pos) bool {
+	return bfu.IsFirstVisited(pos) && (bfu.Matrix.([][]int))[pos.R][pos.C] == 1
+}
+func NewBFSUtil(matrix [][]int) BFSUtilExt {
+	nrow, ncol := len(matrix), len(matrix[0])
+	visited := make([][]int, nrow)
+	for i := range visited {
+		visited[i] = make([]int, ncol)
+	}
+	return BFSUtilExt{BFSUtil{R: nrow, C: ncol, Visited: visited, Matrix: matrix}}
+
+}
+
 func orangesRotting(grid [][]int) int {
 	que := list.New()
 	cnt := 0
 	ans := 0
-	m, n := len(grid), len(grid[0])
+
 	for i, row := range grid {
 		for j, v := range row {
 			if v == 2 {
@@ -14,19 +39,20 @@ func orangesRotting(grid [][]int) int {
 			}
 		}
 	}
-
+	bfu := NewBFSUtil(grid)
 	for que.Len() > 0 {
 		u := que.Front()
 		que.Remove(u)
 		pos := u.Value.(*Pos)
-		for _, neb := range getNeighbours(pos, m, n) {
+		for _, neb := range bfu.GetNeighbours(pos) {
 			// 封装了getNeighbours，BFS相当常用
-			if grid[neb.r][neb.c] == 1 {
+			if bfu.Validate(neb) {
 				// 好橘子\U0001f34a被污染了
-				grid[neb.r][neb.c] = 2
 				cnt--
 				que.PushBack(neb)
-				ans = max(ans, neb.value)
+				if neb.Value > ans {
+					ans = neb.Value
+				}
 			}
 		}
 	}

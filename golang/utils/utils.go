@@ -56,39 +56,18 @@ type Pos struct {
 	R, C, Value int
 }
 type BFSUtil struct {
-	nrow, ncol int
-	visited    [][]int
-	Matrix     any
-}
-
-func NewBFSUtil(matrix any) BFSUtil {
-	var nrow, ncol int
-	if _, ok := matrix.([][]int); ok {
-		nrow, ncol = len(matrix.([][]int)), len(matrix.([][]int)[0])
-	} else if _, ok := matrix.([][]byte); ok {
-		nrow, ncol = len(matrix.([][]byte)), len(matrix.([][]byte)[0])
-	}
-	visited := make([][]int, nrow)
-	for i := range visited {
-		visited[i] = make([]int, ncol)
-	}
-	return BFSUtil{nrow, ncol, visited, matrix}
-
+	R, C    int
+	Visited [][]int
+	Matrix  any
 }
 
 func (bfu *BFSUtil) IsGoodPos(pos *Pos) bool {
-	return pos.R > -1 && pos.R < bfu.nrow && pos.C > -1 && pos.C < bfu.ncol
+	return pos.R > -1 && pos.R < bfu.R && pos.C > -1 && pos.C < bfu.C
 }
 func (bfu *BFSUtil) IsFirstVisited(pos *Pos) bool {
-	return bfu.visited[pos.R][pos.C] == 1
+	return bfu.Visited[pos.R][pos.C] == 1
 }
-func (bfu *BFSUtil) ValidateAddons(pos *Pos) bool {
-	// 自定义方法
-	return true
-}
-func (bfu *BFSUtil) Validate(pos *Pos) bool {
-	return bfu.IsFirstVisited(pos) && bfu.ValidateAddons(pos)
-}
+
 func (bfu *BFSUtil) SetValueInt(pos *Pos, value int) {
 	mtx := bfu.Matrix.([][]int)
 	mtx[pos.R][pos.C] = value
@@ -101,7 +80,7 @@ func (bfu *BFSUtil) GetNeighbours(pos *Pos) (res []*Pos) {
 	for i := 0; i < 4; i++ {
 		newPos := &Pos{pos.R + dx[i], pos.C + dy[i], pos.Value + 1}
 		if bfu.IsGoodPos(newPos) {
-			bfu.visited[newPos.R][newPos.C] += 1
+			bfu.Visited[newPos.R][newPos.C] += 1
 			res = append(res, newPos)
 		}
 	}
