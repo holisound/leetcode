@@ -16,8 +16,16 @@ func verticalTraversal(root *TreeNode) [][]int {
 	   合理的使用结构体
 	*/
 	nodelist := []*Node{}
-	dfs(root, 0, 0, &nodelist)
-
+	var dfs func(root *TreeNode, x, y int)
+	dfs = func(root *TreeNode, x, y int) {
+		if root == nil {
+			return
+		}
+		nodelist = append(nodelist, &Node{root.Val, x, y})
+		dfs(root.Left, x-1, y+1)
+		dfs(root.Right, x+1, y+1)
+	}
+	dfs(root, 0, 0)
 	sort.Slice(nodelist, func(i, j int) bool {
 		n1, n2 := nodelist[i], nodelist[j]
 		if n1.X == n2.X {
@@ -32,26 +40,16 @@ func verticalTraversal(root *TreeNode) [][]int {
 	if len(nodelist) < 1 {
 		return res
 	}
-	res = append(res, []int{nodelist[0].Val})
-	for i := 1; i < len(nodelist); i++ {
-		pre, cur := nodelist[i-1], nodelist[i]
+	pre := nodelist[0]
+	res = append(res, []int{})
+	for _, cur := range nodelist {
 		if pre.X == cur.X {
 			n := len(res)
 			res[n-1] = append(res[n-1], cur.Val)
 		} else {
 			res = append(res, []int{cur.Val})
 		}
+		pre = cur
 	}
 	return res
-}
-
-func dfs(root *TreeNode, x, y int, res *[]*Node) {
-	if root == nil {
-		return
-	}
-	*res = append(*res, &Node{root.Val, x, y})
-
-	dfs(root.Left, x-1, y+1, res)
-	dfs(root.Right, x+1, y+1, res)
-
 }
