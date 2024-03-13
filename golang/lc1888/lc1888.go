@@ -1,8 +1,8 @@
-// package lc1888
+package lc1888
 
 func minFlips(s string) int {
 	n := len(s)
-	cnt := 0 // 计数：与目标交替二进制字符串差异
+	cnt := 0  // 计数：与目标交替二进制字符串差异
 	t := "10" // "01" or "10"
 	for i := range s {
 		if s[i] != t[i&1] {
