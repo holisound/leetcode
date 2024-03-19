@@ -86,3 +86,7 @@ func (bfu *BFSUtil) GetNeighbours(pos *Pos) (res []*Pos) {
 	}
 	return
 }
+
+func Swap(nums []int, i, j int) {
+	nums[i], nums[j] = nums[j], nums[i]
+}
